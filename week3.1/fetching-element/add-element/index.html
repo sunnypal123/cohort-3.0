@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Todo list</h1>
+    <div class="todo">
+        <h3>1. take class</h3>
+        <button onclick="addTodo()">delete</button>
+    </div>
+    <div class="todo2">
+        <h3> 2. go to the gym</h3>
+        <button onclick="addTodo()">delete</button>
+    </div>
+    <br>
+
+    <input type="text">
+    <button>add todo</button>
+    <script>
+        function addTodo(){
+            const inputEl = document.getElementById("inp");
+            const textNode = document.getElementById("div");
+            textNode.innerHTML  = inputEl.value;
+            const parentEl = document.getElementById("todos")
+            parentEl.appendChild(textNode)
+        }
+    </script>
+    
+</body>
+</html>

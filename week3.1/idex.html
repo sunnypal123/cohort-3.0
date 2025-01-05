@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple TODO App</title>
+</head>
+<body>
+  <h1>TODO List</h1>
+  <!-- <h4>hii sunny</h4> -->
+  <input type="text" id="todoInput" placeholder="Enter a TODO">
+  <button id="addTodoButton">Add TODO</button>
+  <ol id="todoList"></ol>
+
+  <script>
+    // Select elements
+    const todoInput = document.getElementById("todoInput");
+    const addTodoButton = document.getElementById("addTodoButton");
+    const todoList = document.getElementById("todoList");
+
+    // Add TODO function
+    addTodoButton.addEventListener("click", () => {
+      const todoText = todoInput.value.trim();
+      if (todoText) {
+        const listItem = document.createElement("li");
+        listItem.textContent = todoText;
+        todoList.appendChild(listItem);
+        todoInput.value = ""; // Clear input field
+      }
+    });
+  </script>
+</body>
+</html>
