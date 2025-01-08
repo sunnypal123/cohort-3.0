@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+      body{
+        background-color: burlywood;
+      }
+        .main{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 50px;
+            margin: 100px;
+            background-color:peachpuff;
+            border-radius: 5px;
+        }
+        #todo-1,#todo-2,.todo-el{
+          display: flex;
+          justify-content: space-between;
+          padding: 5px;
+          align-items: center;
+          width: 100%;
+        }
+        .input-div{
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+          gap: 10px;
+        }
+        #inp{
+          border-radius: 5px;
+          padding: 5px;
+        }
+         .input-btn,.todo-btn{
+          border-radius: 5px;
+          padding: 4px;
+        }
+        .input-btn{
+          background-color: paleturquoise;
+          color: white;
+          border: none;
+
+        }
+        .todo-btn{
+          background-color: rgba(255, 166, 0, 0.6);
+          color: black;
+          border: none;
+        }
+          
+        
+    </style>
+</head>
+<body>
+    <div class="main">
+        <h1>Todo List</h1>
+        <div id="todos">
+          <div class="input-div">
+            <input id="inp" type="text" placeholder="Enter your task" />
+            <button onclick="addTodo()" class="input-btn">Add Todo</button>
+          </div>
+          <div id="todo-1" class="todo-el">
+            <h4>1. Take class</h4>
+            <div class="btn">
+              <button onclick="editTodo(1)" class="todo-btn">Edit</button>
+              <button onclick="deleteTodo(1)" class="todo-btn">Delete</button>
+            </div>
+          </div>
+          <div id="todo-2" class="todo-el">
+            <h4>2. Go out to eat</h4>
+            <div class="btn">
+              <button onclick="editTodo(2)" class="todo-btn">Edit</button>
+              <button onclick="deleteTodo(2)" class="todo-btn">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    <script>
+       let currentIndex = 3;
+
+function addTodo() {
+  const inputEl = document.getElementById("inp");
+  const parentEl = document.getElementById("todos");
+
+  if (inputEl.value.trim() !== "") {
+    parentEl.innerHTML += `
+      <div class='todo-el' id='todo-${currentIndex}'>
+        <h4>${currentIndex}. ${inputEl.value}</h4>
+        <div class="btn">
+          <button class="todo-btn" onclick="editTodo(${currentIndex})">Edit</button>
+          <button class="todo-btn" onclick="deleteTodo(${currentIndex})">Delete</button>
+          
+        </div>
+      </div>
+    `;
+
+    currentIndex++;
+        inputEl.value = ""; 
+      } else {
+        alert("Please enter a task."); 
+      }
+    }
+
+    function deleteTodo(index) {
+      const element = document.getElementById("todo-" + index);
+      element.parentNode.removeChild(element);
+    }
+  
+
+
+    function editTodo(index){
+      const todoElement =document.querySelector("#todo-" +index);
+      const newText = prompt("Edit your task:");
+      if(newText!==null && newText.trim()!==""){
+        todoElement.querySelector("h4").textContent= index+"." +newText;
+      }
+    }
+
+      
+    </script>
+</body>
+</html>
