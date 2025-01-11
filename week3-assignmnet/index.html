@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BG-Color-Changer</title>
+    <!-- <link rel="stylesheet" href="styles.css"> -->
+    <style>
+        body{
+            text-align: center;
+            padding: 20px;
+            
+        }
+        .color-panel{
+            margin: 20px;
+        }
+        .color-button{
+            /* font-size: 50px; */
+            margin: 5px;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            color: white;
+
+        }
+        .color-button:hover{
+            opacity: 0.8;
+        }
+
+        #custom-color{
+            padding: 5px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="color-panel">
+        <button class="color-button" style="background-color: red;" onclick="changeColor('red')">Red</button>
+        <!-- More predefined color buttons can be added here -->
+        <input type="text" id="custom-color" placeholder="Enter color name or hex">
+        <button onclick="addCustomColor()">Add Color</button>
+    </div>
+    <script>
+        function changeColor(color) {
+    document.body.style.backgroundColor = color;
+}
+
+function addCustomColor() {
+    const colorInput = document.getElementById('custom-color');
+    const color = colorInput.value.trim();
+    if (color) {
+        const colorPanel = document.querySelector('.color-panel');
+        const newButton = document.createElement('button');
+        newButton.className = 'color-button';
+        newButton.style.backgroundColor = color;
+        newButton.textContent = color.charAt(0).toUpperCase() + color.slice(1);
+        newButton.onclick = () => changeColor(color);
+        colorPanel.appendChild(newButton);
+        colorInput.value = '';
+    }
+}
+
+
+
+    </script>
+</body>
+</html>
