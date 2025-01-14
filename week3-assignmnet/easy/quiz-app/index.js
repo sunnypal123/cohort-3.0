@@ -1,35 +1,45 @@
-//  use this quizData in your app.
-export const quizData = [{
-    "question": "Which language runs in a web browser?",
-    "a": "Java",
-    "b": "C",
-    "c": "Python",
-    "d": "JavaScript",
-    "correct": "d",
-},
-{
-    "question": "What does CSS stand for?",
-    "a": "Central Style Sheets",
-    "b": "Cascading Style Sheets",
-    "c": "Cascading Simple Sheets",
-    "d": "Cars SUVs Sailboats",
-    "correct": "b",
-},
-{
-    "question": "What does HTML stand for?",
-    "a": "Hypertext Markup Language",
-    "b": "Hypertext Markdown Language",
-    "c": "Hyperloop Machine Language",
-    "d": "Helicopters Terminals Motorboats Lamborginis",
-    "correct": "a",
-},
-{
-    "question": "What year was JavaScript launched?",
-    "a": "1996",
-    "b": "1995",
-    "c": "1994",
-    "d": "none of the above",
-    "correct": "b",
-},
-// you can add more quiz here
-]
+let currentQuestion = 0;
+let score = 0;
+
+function loadQuestion() {
+    const questionElement = document.getElementById('question');
+    const choicesElement = document.getElementById('choices');
+    const currentQuizData = quizData[currentQuestion];
+
+    questionElement.innerText = currentQuizData.question;
+    choiceElement.innerHTML = '';
+    currentQuizData.choices.forEach(choice => {
+        const button = document.createElement('button');
+        button.innerText = choice;
+        button.onclick = () => selectChoice(choice);
+        choicesElement.appendChild(button);
+    });
+}
+
+function selectChoice(choice) {
+    const currentQuizData = quizData[currentQuestion];
+    if (choice === currentQuizData.correct) {
+        score++;
+    }
+    currentQuestion++;
+    if (currentQuestion < quizData.length) {
+        loadQuestion();
+    } else {
+        showResult();
+    }
+}
+
+function showResult() {
+    document.getElementById('quiz').style.display = 'none';
+    const resultElement = document.getElementById('result');
+    resultElement.style.display = 'block';
+    resultElement.innerText = `You scored ${score} out of ${quizData.length}`;
+}
+
+function submitQuiz() {
+    if (currentQuestion < quizData.length) {
+        showResult();
+    }
+}
+
+window.onload = loadQuestion;
