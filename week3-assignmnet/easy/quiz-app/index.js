@@ -7,7 +7,7 @@ function loadQuestion() {
     const currentQuizData = quizData[currentQuestion];
 
     questionElement.innerText = currentQuizData.question;
-    choiceElement.innerHTML = '';
+    choicesElement.innerHTML = '';
     currentQuizData.choices.forEach(choice => {
         const button = document.createElement('button');
         button.innerText = choice;
