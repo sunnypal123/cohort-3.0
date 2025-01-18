@@ -1,0 +1,70 @@
+<div id="form-builder">
+    <label for="field-type">Choose Field Type:</label>
+    <select id="field-type">
+      <option value="text">Text Input</option>
+      <option value="checkbox">Checkbox</option>
+      <option value="radio">Radio Button</option>
+    </select>
+    <button id="add-field">Add Field</button>
+  </div>
+  <h2>Form Preview</h2>
+  <div id="form-preview"></div>
+<style>
+    #form-builder {
+  margin-bottom: 20px;
+}
+
+#form-preview {
+  border: 1px solid #ccc;
+  padding: 10px;
+  background-color: #f9f9f9;
+}
+
+div {
+  margin-bottom: 10px;
+}
+
+</style> 
+
+<script>
+    const fieldTypeSelect = document.getElementById('field-type');
+const addFieldButton = document.getElementById('add-field');
+const formPreview = document.getElementById('form-preview');
+
+
+addFieldButton.addEventListener('click', () => {
+  // Get selected field type
+  const selectedType = fieldTypeSelect.value;
+
+  // Create a container for the field
+  const fieldContainer = document.createElement('div');
+
+  // Add the correct field based on type
+  if (selectedType === 'text') {
+    const textField = document.createElement('input');
+    textField.type = 'text';
+    textField.placeholder = 'Enter text';
+    fieldContainer.appendChild(textField);
+  } else if (selectedType === 'checkbox') {
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    const label = document.createElement('label');
+    label.textContent = 'Checkbox';
+    fieldContainer.appendChild(checkbox);
+    fieldContainer.appendChild(label);
+  } else if (selectedType === 'radio') {
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = 'radio-group'; // Group all radios together
+    const label = document.createElement('label');
+    label.textContent = 'Radio Button';
+    fieldContainer.appendChild(radio);
+    fieldContainer.appendChild(label);
+  }
+
+  // Add the field to the preview area
+  formPreview.appendChild(fieldContainer);
+});
+
+
+</script>

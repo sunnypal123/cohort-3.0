@@ -1,0 +1,110 @@
+// Step 1: Set up the HTML structure
+const app = document.getElementById('app');
+app.innerHTML = `
+  <h1>Pokémon Card Viewer</h1>
+  <label for="category">Select Pokémon Category:</label>
+  <select id="category">
+    <option value="all">All</option>
+    <option value="fire">Fire</option>
+    <option value="water">Water</option>
+    <option value="grass">Grass</option>
+    <option value="electric">Electric</option>
+  </select>
+  <label for="number">Enter Number of Pokémon:</label>
+  <input type="number" id="number" min="1" placeholder="e.g., 5" />
+  <button id="fetchBtn">Fetch Pokémon</button>
+  <div id="cards" class="cards"></div>
+
+// Step 2: Add CSS styles for layout and design
+const style = document.createElement('style');
+style.innerHTML = `
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+  }
+  .card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  .card img {
+    max-width: 100px;
+    margin-bottom: 8px;
+  }
+  .card h3 {
+    margin: 0;
+    font-size: 1.2em;
+  }
+document.head.appendChild(style);
+
+// Step 3: Add an event listener for the button
+const fetchBtn = document.getElementById('fetchBtn');
+const cardsContainer = document.getElementById('cards');
+
+fetchBtn.addEventListener('click', async () => {
+  // Step 4: Get user inputs
+  const category = document.getElementById('category').value;
+  const number = parseInt(document.getElementById('number').value, 10);
+
+  // Step 5: Validate the number input
+  if (isNaN(number) || number <= 0) {
+    alert('Please enter a valid number of Pokémon!');
+    return;
+  }
+
+  // Step 6: Show a loading message
+  cardsContainer.innerHTML = '<p>Loading...</p>';
+
+  try {
+    // Step 7: Fetch Pokémon data
+    const pokemonCards = await fetchPokemons(number, category);
+
+    // Step 8: Render the Pokémon cards
+    renderPokemons(pokemonCards);
+  } catch (error) {
+    console.error(error);
+    cardsContainer.innerHTML = '<p>Failed to load Pokémon cards. Please try again.</p>';
+  }
+});
+
+// Step 9: Function to fetch Pokémon data based on inputs
+async function fetchPokemons(number, category) {
+  const fetchedPokemons = [];
+  let count = 0;
+
+  for (let i = 1; count < number && i <= 1010; i++) {
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${i}`);
+    const pokemon = await response.json();
+
+    // Check if the Pokémon matches the selected category
+    if (category === 'all' || pokemon.types.some(type => type.type.name === category)) {
+      fetchedPokemons.push(pokemon);
+      count++;
+    }
+  }
+
+  return fetchedPokemons;
+}
+
+// Step 10: Function to render the Pokémon cards on the page
+function renderPokemons(pokemons) {
+  cardsContainer.innerHTML = '';
+
+  pokemons.forEach(pokemon => {
+    const card = document.createElement('div');
+    card.className = 'card';
+
+    card.innerHTML = `
+      <img src="${pokemon.sprites.front_default}" alt="${pokemon.name}" />
+      <h3>${pokemon.name}</h3>
+      <p>Type: ${pokemon.types.map(type => type.type.name).join(', ')}</p>
+    `;
+
+    cardsContainer.appendChild(card);
+  });
+}
