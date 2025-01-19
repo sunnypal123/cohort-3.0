@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taskify - Task Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .column {
+            flex: 1;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .column h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        .task {
+            background: #e0e7ff;
+            border-radius: 6px;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            cursor: grab;
+        }
+
+        .task:active {
+            cursor: grabbing;
+        }
+
+        .placeholder {
+            background: #cbd5e1;
+            border-radius: 6px;
+            height: 50px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="column" id="todo">
+            <h2>To Do</h2>
+            <div class="task" draggable="true">Task 1</div>
+            <div class="task" draggable="true">Task 2</div>
+        </div>
+
+        <div class="column" id="inProgress">
+            <h2>In Progress</h2>
+        </div>
+
+        <div class="column" id="completed">
+            <h2>Completed</h2>
+        </div>
+    </div>
+
+    <script>
+        const tasks = document.querySelectorAll('.task');
+        const columns = document.querySelectorAll('.column');
+
+        let draggedTask = null;
+
+        tasks.forEach(task => {
+            task.addEventListener('dragstart', () => {
+                draggedTask = task;
+                setTimeout(() => task.style.display = 'none', 0);
+            });
+
+            task.addEventListener('dragend', () => {
+                setTimeout(() => {
+                    draggedTask.style.display = 'block';
+                    draggedTask = null;
+                }, 0);
+            });
+        });
+
+        columns.forEach(column => {
+            column.addEventListener('dragover', e => {
+                e.preventDefault();
+                const placeholder = document.createElement('div');
+                placeholder.classList.add('placeholder');
+                column.appendChild(placeholder);
+            });
+
+            column.addEventListener('dragleave', () => {
+                const placeholder = column.querySelector('.placeholder');
+                if (placeholder) {
+                    placeholder.remove();
+                }
+            });
+
+            column.addEventListener('drop', () => {
+                const placeholder = column.querySelector('.placeholder');
+                if (placeholder) {
+                    placeholder.remove();
+                }
+                column.appendChild(draggedTask);
+            });
+        });
+    </script>
+</body>
+</html>
