@@ -1,37 +1,49 @@
- var timer = 60;
+var timer = 60;
+var score = 0;
+var hitrn = 0;
 
-function getNewhit(){
-    var rn = Math.floor(Math.random() * 10 )
-    document.querySelector("#hitval").textContent = rn
+function increaseScore() {
+    score += 10;
+    document.querySelector("#scoreval").textContent = score;
 }
 
+function getNewhit() {
+    hitrn = Math.floor(Math.random() * 10);
+    document.querySelector("#hitval").textContent = hitrn;
+}
 
-
-function makebubble(){
+function makebubble() {
     var clutter = "";
 
-for( var i=1; i<=162;i++){
-    var rn = Math.floor(Math.random()*10)
-    clutter += `<div class="bubble">${rn}</div>`
+    for (var i = 1; i <= 162; i++) {
+        var rn = Math.floor(Math.random() * 10);
+        clutter += `<div class="bubble">${rn}</div>`;
+    }
+    document.querySelector("#pbtm").innerHTML = clutter;
 }
-document.querySelector("#pbtm").innerHTML = clutter
 
-}
-function runtime(){
-    var timerint = setInterwal(function(){
-        if(timer >0){
+function runTimer() {
+    var timerint = setInterval(function () {
+        if (timer > 0) {
             timer--;
             document.querySelector("#timerval").textContent = timer;
-
-        }else{
+        } else {
             clearInterval(timerint);
+            document.querySelector("#pbtm").innerHTML = `<h1>Game Over</h1>`;
         }
-        
-    },1000);
+    }, 1000);
 }
 
+// Corrected the event listener
+document.querySelector("#pbtm").addEventListener("click", function (event) {
+    var clickednum = Number(event.target.textContent); // Use `event` instead of `Dets`
+    if (clickednum === hitrn) {
+        increaseScore();
+        makebubble();
+        getNewhit();
+    }
+});
+
 makebubble();
-runtime();
+runTimer();
 getNewhit();
-
-
