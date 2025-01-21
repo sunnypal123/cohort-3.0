@@ -56,16 +56,16 @@ html,body{
 
 #pbtm{
     display: flex;
-    flex-wrap: wrap;
     gap: 10px;
+    flex-wrap: wrap;
     padding: 20px;
-    width: 100px;
+    width: 100%;
     height: calc(100%-100px);
 }
 .bubble{
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     width: 60px;
     height: 60px;
     color: #fff;
